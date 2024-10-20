@@ -1,31 +1,35 @@
 CREATE DATABASE RecipeManager;
 
 CREATE TABLE Ingredients(
-    IngredientID INT PRIMARY KEY,
-    IngredientName VARCHAR(255) NOT NULL
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Steps(
-    StepID INT PRIMARY KEY,
-    StepNumber INT NOT NULL,
-    StepDescription VARCHAR(255) NOT NULL,
+    ID SERIAL PRIMARY KEY,
+    Number INTEGER NOT NULL,
+    Description VARCHAR(255) NOT NULL,
     Tool VARCHAR(20),
-    Time INT DEFAULT 0,
-    IngredientID INT,
-    FOREIGN KEY (IngredientID) REFERENCES Ingredients(IngredientID)
+    Time INTEGER DEFAULT 0,
 );
 
 CREATE TABLE Recipes(
-    RecipeID INT PRIMARY KEY,
-    RecipeName VARCHAR(255) NOT NULL,
-    RecipeDescription VARCHAR(255) NOT NULL,
-    RecipeImage VARCHAR(255) NULL,
-    RecipeType VARCHAR(255) NOT NULL,
-    StepID INT NOT NULL,
-    FOREIGN KEY (StepID) REFERENCES Steps(StepID)
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Description VARCHAR(255) NOT NULL,
+    Type VARCHAR(255) NOT NULL,
 );
 
+CREATE TABLE Recipes_Steps(
+    Recipe_ID INTEGER REFERENCES Recipes(ID),
+    Steps_ID INTEGER REFERENCES Steps(ID)
+);
+
+CREATE TABLE Steps_Ingredients(
+    Steps_ID INTEGER REFERENCES Steps(ID),
+    Ingredient_ID INTEGER REFERENCES Ingredients(ID)
+)
+
 CREATE TABLE Inventory(
-    IngredientID INT,
-    FOREIGN KEY (IngredientID) REFERENCES Ingredients(IngredientID)
+    IngredientID INT REFERENCES Ingredient(ID)
 );
