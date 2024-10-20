@@ -37,3 +37,4 @@ CREATE TABLE Inventory(
 
 -- Attributes + ID for filtering feature
 -- Time + Active cooking + Tools for future task scheduling feature
+-- Can add (Nutrition, Budget), tracker # of times cooked

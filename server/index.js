@@ -136,7 +136,7 @@ app.post('/ingredients', async (req, res) => {
             'INSERT INTO Ingredients (Name) VALUES($1) RETURNING *',
             [Name]
         );
-        res.json(newRecipe.rows[0]);
+        res.json(newIngredient.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
@@ -162,9 +162,9 @@ app.put('/ingredients/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { Name } = req.body;
-        const updateStep = await pool.query('UPDATE Ingredients SET Name = $1, WHERE ID = $2', [Name, id]);
+        const updateIngredient = await pool.query('UPDATE Ingredients SET Name = $1, WHERE ID = $2', [Name, id]);
 
-        res.json('Step updated');
+        res.json('Ingredient updated');
     } catch (err) {
         console.error(err.message)
     }
@@ -187,11 +187,34 @@ app.delete('/ingredients/:id', async (req, res) => {
 app.post('/inventory', async (req, res) => {
     try {
         const { id } = req.body;
-        const newIngredient = await pool.query(
-            'INSERT INTO Recipes (id) VALUES($1) RETURNING *',
+        const newInventoryI = await pool.query(
+            'INSERT INTO Inventory (id) VALUES($1) RETURNING *',
             [id]
         );
-        res.json(newIngredient.rows[0]);
+        res.json(newInventoryI.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// get all inventory ingredients
+
+app.get('/inventory', async(req, res) => {
+    try {
+        const allInventoryI = await pool.query('SELECT * FROM Inventory');
+        res.json(allInventoryI.rows)
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// delete ingredient from inventory
+
+app.delete('/inventory/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteInventoryI = await pool.query('DELETE FROM Inventory WHERE ID = $1', [id]);
+        res.json('Inventory Ingredient deleted');
     } catch (err) {
         console.error(err.message);
     }
