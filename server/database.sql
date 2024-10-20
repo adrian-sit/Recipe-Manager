@@ -11,6 +11,7 @@ CREATE TABLE Steps(
     Description VARCHAR(255) NOT NULL,
     Tool VARCHAR(20),
     Time INTEGER DEFAULT 0,
+    Active_cooking BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE Recipes(
@@ -33,3 +34,6 @@ CREATE TABLE Steps_Ingredients(
 CREATE TABLE Inventory(
     IngredientID INT REFERENCES Ingredient(ID)
 );
+
+-- Attributes + ID for filtering feature
+-- Time + Active cooking + Tools for future task scheduling feature
